@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+// 指定模板类的名称，名称必须是有实际业务意义的
+option java_outer_classname = "LoginProto";
+
+message User{
+  optional int32 userId = 1;
+  optional string userName = 2;
+  optional string userTel = 3;
+  optional string userEmail = 4;
+  optional string userPassword = 5;
+  optional bool userType = 6;
+  optional double userMoney = 7;
+  optional string userCompany = 8;
+  optional string userHome = 9;
+  optional string userIp = 10;
+  optional string userPos = 11;
+}
+
+message Login{
+  int32 loginType = 1; //登录方式 0-->电话登录  1-->邮箱登录 ...
+  User user = 2;//用户信息
+}
