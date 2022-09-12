@@ -10,7 +10,7 @@ public enum OptionDetails {
     TEST_OK("测试成功","无敌"),
 
     //自定义协议
-    PROTOCOL_ERROR("协议错误","协议错误"),
+    PROTOCOL_ERROR("协议错误","协议错误"),PARAM_ERROR("参数异常","参数异常"),
 
 
     //登录

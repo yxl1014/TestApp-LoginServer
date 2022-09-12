@@ -1,7 +1,14 @@
 syntax = "proto3";
 
 // 指定模板类的名称，名称必须是有实际业务意义的
-option java_outer_classname = "LoginProto";
+option java_outer_classname = "yxl.testapp.domain.TestProto";
+
+
+enum Types{
+  USER = 0;
+  C2S_LOGIN = 1;
+  S2C_LOGIN = 2;
+}
 
 message User{
   optional int32 userId = 1;

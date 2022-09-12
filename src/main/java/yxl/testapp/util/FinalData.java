@@ -19,6 +19,12 @@ public class FinalData {
 
 
     /**
+     * jwt token 签发方
+     * */
+    public static String TOKEN_ISSUER="TestApp-LoginServer";
+
+
+    /**
      * byte数组转int
      * */
     public static int byteArrayToInt(byte[] bytes) {

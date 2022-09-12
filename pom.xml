@@ -76,7 +76,7 @@
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>4.0.0</version>
+            <version>2.2.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
@@ -177,7 +177,7 @@
                     <protocArtifact>com.google.protobuf:protoc:${protobuf-java.version}:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>proto-plugin</pluginId>
                     <protoSourceRoot>src/proto</protoSourceRoot>
-                    <outputDirectory>src/main/java/yxl/testapp/proto</outputDirectory>
+                    <outputDirectory>src/main/java</outputDirectory>
                     <!--设置是否在生成java文件之前清空outputDirectory的文件，默认值为true，设置为false时也会覆盖同名文件-->
                     <clearOutputDirectory>false</clearOutputDirectory>
                 </configuration>
