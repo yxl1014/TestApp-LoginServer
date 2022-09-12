@@ -108,7 +108,7 @@
     </dependencies>
 
     <build>
-        <finalName>TestAppOneMod</finalName>
+        <finalName>TestApp-LoginServer</finalName>
         <extensions>
             <extension>
                 <groupId>kr.motd.maven</groupId>

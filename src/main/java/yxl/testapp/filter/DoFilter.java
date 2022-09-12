@@ -17,7 +17,7 @@ public class DoFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        System.out.println("filter 进来了--->" + servletRequest.getLocalPort());
+        //System.out.println("filter 进来了--->" + servletRequest.getLocalPort());
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

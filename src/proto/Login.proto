@@ -17,7 +17,13 @@ message User{
   optional string userPos = 11;
 }
 
-message Login{
+message C2S_Login{
   int32 loginType = 1; //登录方式 0-->电话登录  1-->邮箱登录 ...
   User user = 2;//用户信息
+}
+
+message S2C_Login{
+  string msg = 1;
+  optional string token = 2;
+  optional bool status = 3;
 }
