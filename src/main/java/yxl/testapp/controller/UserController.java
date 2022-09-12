@@ -4,9 +4,9 @@ package yxl.testapp.controller;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import yxl.testapp.log.LogMsg;
-import yxl.testapp.log.LogUtil;
-import yxl.testapp.log.OptionDetails;
+import yxl.testapp.logs.LogMsg;
+import yxl.testapp.logs.LogUtil;
+import yxl.testapp.logs.OptionDetails;
 import yxl.testapp.util.ProtocolUtil;
 
 /**
