@@ -12,5 +12,5 @@ public interface UserService {
     /**
      * 登录逻辑
      * */
-    byte[] login(byte[] data) throws InvalidProtocolBufferException;
+    byte[] login(byte[] data);
 }

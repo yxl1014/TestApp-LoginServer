@@ -47,17 +47,7 @@ public class ProtocolUtil {
     }
 
     public byte[] encodeProtocol(byte[] data, int len, TestProto.Types type) {
-/*
-        byte[] result = new byte[len + 13];
-        byte[] temp = FinalData.intToByteArray(len);
-        System.arraycopy(temp, 0, result, 0, 4);
-        temp = FinalData.intToByteArray(Integer.parseInt(FinalData.MAGIC_NUMBER));
-        System.arraycopy(temp, 0, result, 4, 4);
-        System.arraycopy(data, 0, result, 8, len);
-        System.arraycopy(FinalData.END.getBytes(), 0, result, 8 + len, 5);
-*/
-
-        ByteBuffer buf = ByteBuffer.allocate(len + 13);
+        ByteBuffer buf = ByteBuffer.allocate(len + 17);
         buf.putInt(len);
         buf.putInt(Integer.parseInt(FinalData.MAGIC_NUMBER));
         buf.putInt(type.getNumber());

@@ -10,12 +10,13 @@ public enum OptionDetails {
     TEST_OK("测试成功","无敌"),
 
     //自定义协议
-    PROTOCOL_ERROR("协议错误","协议错误"),PARAM_ERROR("参数异常","参数异常"),
+    PROTOCOL_ERROR("协议错误","协议错误"),PARAM_ERROR("参数异常","参数异常")
+    ,SYSTEM_ERROR("系统错误","系统错误"),PROTOBUF_ERROR("PROTO数据错误","PROTO数据错误"),
 
 
     //登录
     LOGIN_OK("登录成功", "登录成功"), LOGIN_FINAL_EXIST("登陆失败","帐号已存在"),
-    LOGIN_PWD_ERROR("登陆失败","密码错误")
+    LOGIN_TEL_PWD_ERROR("登陆失败","电话或密码错误"),LOGIN_EMAIL_PWD_ERROR("登陆失败","邮箱或密码错误")
     ;
 
 
