@@ -5,6 +5,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import yxl.testapp.annotation.Check;
 import yxl.testapp.domain.TestProto;
 import yxl.testapp.logs.LogMsg;
 import yxl.testapp.logs.LogUtil;
@@ -48,6 +49,14 @@ public class UserController {
     @ResponseBody
     public String test() {
         logger.info(LogUtil.makeOptionDetails(LogMsg.TEST, OptionDetails.TEST_OK));
+        return "hello";
+    }
+
+
+    @GetMapping("/check")
+    @ResponseBody
+    @Check
+    public String test1(){
         return "hello";
     }
 

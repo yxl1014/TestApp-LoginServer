@@ -35,7 +35,7 @@ public class CheckHandle implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod)) {
-            response.sendError(1014, OptionDetails.NO_CONTROLLER.getAll());
+            response.sendError(1000, OptionDetails.NO_CONTROLLER.getAll());
             return false;
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -48,19 +48,19 @@ public class CheckHandle implements HandlerInterceptor {
         logger.info(LogUtil.makeOptionDetails(LogMsg.INTERCEPTOR, OptionDetails.CHECK));
         String token = request.getHeader("token");
         if (token == null) {
-            response.sendError(1014, OptionDetails.NO_TOKEN.getAll());
+            response.sendError(1001, OptionDetails.NO_TOKEN.getAll());
             return false;
         }
         byte[] data = JWTUtil.unsign(token, byte[].class);
         if (data == null) {
-            response.sendError(1014, OptionDetails.TOKEN_ERROR.getAll());
+            response.sendError(1002, OptionDetails.TOKEN_ERROR.getAll());
             return false;
         }
 
         TestProto.User user = TestProto.User.parseFrom(data);
         boolean b = userService.checkUser(user);
         if (!b) {
-            response.sendError(1014, OptionDetails.TOKEN_EXPIRES.getAll());
+            response.sendError(1003, OptionDetails.TOKEN_EXPIRES.getAll());
             return false;
         }
         logger.info(LogUtil.makeOptionDetails(LogMsg.INTERCEPTOR, OptionDetails.CHECK_OK, user));
