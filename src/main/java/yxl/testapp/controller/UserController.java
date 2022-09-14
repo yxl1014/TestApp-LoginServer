@@ -31,6 +31,9 @@ public class UserController {
     private UserService userService;
 
 
+    /**
+     * 登录
+     * */
     @PostMapping("/login")
     public byte[] login(@RequestBody byte[] data){
         byte[] temp = protocolUtil.decodeProtocol(data);
@@ -45,6 +48,27 @@ public class UserController {
         return userService.login(temp);
     }
 
+    /**
+     * 注册
+     * */
+    @PostMapping("/register")
+    public byte[] register(@RequestBody byte[] data){
+        byte[] temp = protocolUtil.decodeProtocol(data);
+        if (temp == null) {
+            logger.info(LogUtil.makeOptionDetails(LogMsg.REGISTER, OptionDetails.PROTOBUF_ERROR));
+            TestProto.S2C_Register.Builder result = TestProto.S2C_Register.newBuilder();
+            result.setStatus(false);
+            result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
+            byte[] bytes = result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_REGISTER);
+        }
+        return userService.register(temp);
+    }
+
+
+    /**
+     * 无check测试
+     * */
     @GetMapping("/")
     @ResponseBody
     public String test() {
@@ -53,6 +77,9 @@ public class UserController {
     }
 
 
+    /**
+     * 有check测试
+     * */
     @GetMapping("/check")
     @ResponseBody
     @Check

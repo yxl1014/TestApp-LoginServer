@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * @author yxl
+ * @author yxl.testapp.domain.yxl
  * @date: 2022/9/12 下午1:37
  * 常量类
  */

@@ -81,7 +81,15 @@ public class UserServiceImpl implements UserService {
             return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
         } else {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.LOGIN_OK,user));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.LOGIN_OK, user));
+
+            //ip地址出现变化，修改数据库
+            if (!user.getUserIp().equals(builder.getUser().getUserIp())) {
+                logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.UPDATE_IP));
+                userMapper.updateUserIPByUserId(builder.getUser().getUserIp(), user.getUserId());
+                userMapper.updateUserPosByUserId(builder.getUser().getUserPos(), user.getUserId());
+            }
+
             result.setStatus(true);
             result.setMsg(OptionDetails.LOGIN_OK.getMsg());
             result.setToken(JWTUtil.sign(user.toBuilder().build().toByteArray(), FinalData.LOGIN_EXPIRES));
@@ -93,6 +101,54 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkUser(TestProto.User user) {
         return userMapper.findUserByTelAndPwd(user.getUserTel(), user.getUserPassword()) != null;
+    }
+
+    @Override
+    public byte[] register(byte[] data) {
+        TestProto.S2C_Register.Builder result = TestProto.S2C_Register.newBuilder();
+        TestProto.C2S_Register builder = null;
+        try {
+            builder = TestProto.C2S_Register.parseFrom(data);
+        } catch (InvalidProtocolBufferException e) {
+            //日志
+            logger.info(LogUtil.makeOptionDetails(LogMsg.REGISTER, OptionDetails.PROTOBUF_ERROR));
+
+            result.setStatus(false);
+            result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
+            byte[] bytes = result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_REGISTER);
+        }
+
+        TestProto.User user = builder.getUser();
+        TestProto.User old = userMapper.findUserByTel(user.getUserTel());
+        if (old != null) {
+            //日志
+            logger.info(LogUtil.makeOptionDetails(LogMsg.REGISTER, OptionDetails.REGISTER_TEL_EXIST));
+
+            result.setStatus(false);
+            result.setMsg(OptionDetails.REGISTER_TEL_EXIST.getMsg());
+            byte[] bytes = result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_REGISTER);
+        }
+
+        int ok = userMapper.insertUser(user);
+
+        if (ok == 0) {
+            //日志
+            logger.info(LogUtil.makeOptionDetails(LogMsg.REGISTER, OptionDetails.SYSTEM_ERROR, user));
+
+            result.setStatus(false);
+            result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
+        } else {
+            //日志
+            logger.info(LogUtil.makeOptionDetails(LogMsg.REGISTER, OptionDetails.REGISTER_OK));
+
+            result.setStatus(true);
+            result.setMsg(OptionDetails.REGISTER_OK.getMsg());
+        }
+
+        byte[] bytes = result.buildPartial().toByteArray();
+        return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_REGISTER);
     }
 
 }

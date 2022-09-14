@@ -8,6 +8,8 @@ enum Types{
   USER = 0;
   C2S_LOGIN = 1;
   S2C_LOGIN = 2;
+  C2S_REGISTER = 3;
+  S2C_REGISTER = 4;
 }
 
 message User{
@@ -33,4 +35,13 @@ message S2C_Login{
   string msg = 1;
   optional string token = 2;
   optional bool status = 3;
+}
+
+message C2S_Register{
+  User user = 1;
+}
+
+message S2C_Register{
+  bool status = 1;
+  string msg = 2;
 }

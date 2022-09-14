@@ -27,8 +27,12 @@ public enum OptionDetails {
 
 
     //登录
-    LOGIN_OK("登录成功", "登录成功"), LOGIN_FINAL_EXIST("登陆失败", "帐号已存在"),
-    LOGIN_TEL_PWD_ERROR("登陆失败", "电话或密码错误"), LOGIN_EMAIL_PWD_ERROR("登陆失败", "邮箱或密码错误");
+    LOGIN_OK("登录成功", "登录成功"),UPDATE_IP("登录成功","Ip地址发生变化"),
+    LOGIN_TEL_PWD_ERROR("登陆失败", "电话或密码错误"), LOGIN_EMAIL_PWD_ERROR("登陆失败", "邮箱或密码错误"),
+
+
+    //注册
+    REGISTER_TEL_EXIST("注册失败","此电话已存在"), REGISTER_OK("注册成功", "注册成功");
 
 
     private String status;

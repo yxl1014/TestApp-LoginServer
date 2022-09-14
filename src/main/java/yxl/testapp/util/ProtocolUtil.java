@@ -6,7 +6,7 @@ import yxl.testapp.domain.TestProto;
 import java.nio.ByteBuffer;
 
 /**
- * @author yxl
+ * @author yxl.testapp.domain.yxl
  * @date: 2022/9/12 下午1:53
  * 自定义协议工具类
  * 4byte    4byte   4byte   payload     5byte

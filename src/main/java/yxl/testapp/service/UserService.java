@@ -1,6 +1,5 @@
 package yxl.testapp.service;
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import yxl.testapp.domain.TestProto;
 
 /**
@@ -16,4 +15,6 @@ public interface UserService {
     byte[] login(byte[] data);
 
     boolean checkUser(TestProto.User user);
+
+    byte[] register(byte[] data);
 }

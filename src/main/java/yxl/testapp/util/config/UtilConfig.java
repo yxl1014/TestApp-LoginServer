@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import yxl.testapp.util.ProtocolUtil;
 
 /**
- * @author yxl
+ * @author yxl.testapp.domain.yxl
  * @date: 2022/9/12 下午2:05
  * 工具bean载入配置文件
  */
