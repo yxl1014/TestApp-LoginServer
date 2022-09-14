@@ -1,6 +1,7 @@
 package yxl.testapp.service;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import yxl.testapp.domain.TestProto;
 
 /**
  * @author yxl
@@ -13,4 +14,6 @@ public interface UserService {
      * 登录逻辑
      * */
     byte[] login(byte[] data);
+
+    boolean checkUser(TestProto.User user);
 }

@@ -1,13 +1,19 @@
 package yxl.testapp.interceptor;
 
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import yxl.testapp.annotation.Check;
 import yxl.testapp.controller.UserController;
+import yxl.testapp.domain.TestProto;
+import yxl.testapp.logs.LogMsg;
 import yxl.testapp.logs.LogUtil;
+import yxl.testapp.logs.OptionDetails;
+import yxl.testapp.service.UserService;
+import yxl.testapp.util.JWTUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,24 +29,42 @@ public class CheckHandle implements HandlerInterceptor {
 
     private final static Logger logger = LogUtil.getLogger(CheckHandle.class);
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod)) {
-            response.sendError(1014, "非本系统接口");
+            response.sendError(1014, OptionDetails.NO_CONTROLLER.getAll());
             return false;
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
 
-        if (method.isAnnotationPresent(Check.class)) {
-            logger.info("check");
-            //TODO balabalbala
-            return true;
-        }else {
-            logger.info("no check");
+        if (!method.isAnnotationPresent(Check.class)) {
+            logger.info(LogUtil.makeOptionDetails(LogMsg.INTERCEPTOR, OptionDetails.NO_CHECK));
             return true;
         }
+        logger.info(LogUtil.makeOptionDetails(LogMsg.INTERCEPTOR, OptionDetails.CHECK));
+        String token = request.getHeader("token");
+        if (token == null) {
+            response.sendError(1014, OptionDetails.NO_TOKEN.getAll());
+            return false;
+        }
+        byte[] data = JWTUtil.unsign(token, byte[].class);
+        if (data == null) {
+            response.sendError(1014, OptionDetails.TOKEN_ERROR.getAll());
+            return false;
+        }
 
+        TestProto.User user = TestProto.User.parseFrom(data);
+        boolean b = userService.checkUser(user);
+        if (!b) {
+            response.sendError(1014, OptionDetails.TOKEN_EXPIRES.getAll());
+            return false;
+        }
+        logger.info(LogUtil.makeOptionDetails(LogMsg.INTERCEPTOR, OptionDetails.CHECK_OK, user));
+        return true;
     }
 
     @Override

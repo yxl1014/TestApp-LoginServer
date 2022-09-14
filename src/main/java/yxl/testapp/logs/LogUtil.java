@@ -2,6 +2,7 @@ package yxl.testapp.logs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import yxl.testapp.domain.TestProto;
 
 /**
  * @author yxl
@@ -18,5 +19,10 @@ public class LogUtil {
 
     public static String makeOptionDetails(LogMsg logMsg, OptionDetails optionDetails) {
         return logMsg.getName() + "---" + optionDetails.getStatus() + "---" + optionDetails.getMsg();
+    }
+
+    public static String makeOptionDetails(LogMsg logMsg, OptionDetails optionDetails, TestProto.User user) {
+        return logMsg.getName() + "---" + optionDetails.getStatus() + "---" + optionDetails.getMsg() +
+                "userId:" + user.getUserId() + ",userName:" + user.getUserName();
     }
 }

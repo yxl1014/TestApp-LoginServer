@@ -8,7 +8,7 @@ package yxl.testapp.logs;
 public enum LogMsg {
     //测试
     TEST("测试一下"),
-    LOGIN("登录操作"), REGISTER("注册操作")
+    LOGIN("登录操作"), REGISTER("注册操作"),INTERCEPTOR("拦截器")
     ;
 
 

@@ -81,13 +81,18 @@ public class UserServiceImpl implements UserService {
             return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
         } else {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.LOGIN_OK));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.LOGIN_OK,user));
             result.setStatus(true);
             result.setMsg(OptionDetails.LOGIN_OK.getMsg());
             result.setToken(JWTUtil.sign(user.toBuilder().build().toByteArray(), FinalData.LOGIN_EXPIRES));
             byte[] bytes = result.buildPartial().toByteArray();
             return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
         }
+    }
+
+    @Override
+    public boolean checkUser(TestProto.User user) {
+        return userMapper.findUserByTelAndPwd(user.getUserTel(), user.getUserPassword()) != null;
     }
 
 }
