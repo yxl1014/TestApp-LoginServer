@@ -1,12 +1,11 @@
 package yxl.testapp.controller;
 
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import yxl.testapp.annotation.Check;
-import proto.TestProto;
+import pto.TestProto;
 import yxl.testapp.logs.LogMsg;
 import yxl.testapp.logs.LogUtil;
 import yxl.testapp.logs.OptionDetails;

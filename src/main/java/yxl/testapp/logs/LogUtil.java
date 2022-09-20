@@ -2,7 +2,7 @@ package yxl.testapp.logs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import proto.TestProto;
+import pto.TestProto;
 
 /**
  * @author yxl
