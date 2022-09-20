@@ -2,7 +2,7 @@ syntax = "proto3";
 
 // 指定模板类的名称，名称必须是有实际业务意义的
 option java_outer_classname = "TestProto";
-option java_package = "main.pto";
+option java_package = "proto";
 
 enum Types{
   USER = 0;

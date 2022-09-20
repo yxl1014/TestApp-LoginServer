@@ -1,7 +1,7 @@
 package yxl.testapp.mapper;
 
 import org.apache.ibatis.annotations.*;
-import yxl.testapp.domain.TestProto;
+import proto.TestProto;
 
 /**
  * @author yxl

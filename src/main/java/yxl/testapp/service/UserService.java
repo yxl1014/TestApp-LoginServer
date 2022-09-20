@@ -1,6 +1,6 @@
 package yxl.testapp.service;
 
-import yxl.testapp.domain.TestProto;
+import proto.TestProto;
 
 /**
  * @author yxl

@@ -1,7 +1,7 @@
 package yxl.testapp.util;
 
 import io.netty.buffer.ByteBuf;
-import yxl.testapp.domain.TestProto;
+import proto.TestProto;
 
 import java.nio.ByteBuffer;
 
