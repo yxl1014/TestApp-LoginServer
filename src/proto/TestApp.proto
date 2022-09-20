@@ -10,6 +10,13 @@ enum Types{
   S2C_LOGIN = 2;
   C2S_REGISTER = 3;
   S2C_REGISTER = 4;
+  C2C_UPDATEPWD=5;
+  S2C_UPDATEPWD=6;
+  C2C_UPDATEEMAIL=7;
+  S2C_UPDATEEMAIL=8;
+  C2C_UPDATEALL=9;
+  S2C_UPDATEALL=10;
+
 }
 
 //--------------------LoginServer--------------------
@@ -46,6 +53,37 @@ message S2C_Register{
   bool status = 1;
   string msg = 2;
 }
+
+//修改密码
+message C2S_UpdatePwd {
+  User user = 1;
+}
+
+message S2C_UpdatePwd{
+  bool status = 1;
+  string msg = 2;
+}
+
+//修改邮箱
+message C2S_UpdateEmail {
+  User user = 1;
+}
+
+message S2C_UpdateEmail{
+  bool status = 1;
+  string msg = 2;
+}
+
+//修改全部信息
+message C2S_UpdateAll {
+  User user = 1;
+}
+
+message S2C_UpdateAll{
+  bool status = 1;
+  string msg = 2;
+}
+
 
 
 

@@ -17,4 +17,9 @@ public interface UserService {
     boolean checkUser(TestProto.User user);
 
     byte[] register(byte[] data);
+
+    byte[] updatepwd(byte[] data);
+
+    byte[] updateEmail(byte[] data);
+    byte[] updateAll(byte[] data);
 }

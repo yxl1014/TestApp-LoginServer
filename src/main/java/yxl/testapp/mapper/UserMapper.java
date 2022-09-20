@@ -90,5 +90,16 @@ public interface UserMapper {
     @Update("update Users set userIp = #{userPos} where userId = #{userId}")
     void updateUserPosByUserId(@Param("userPos") String userPos, @Param("userId") int userId);
 
+    @Update("update Users set userPassword =#{userPwd} where userTle=#{un}")
+    int updateUserPwd(@Param("pwd") String userPwd, @Param("un") String un);
 
+    @Update("update Users set userEmail =#{userEmail} where userTle=#{un}")
+    int updateUserEaili(@Param("userEmail") String userEmail, @Param("un") String un);
+
+    @Update("update Users set userTel =#{userEmail} where userTle=#{un}")
+    int updateUserTel(@Param("userEmail") String userEmail, @Param("un") String un);
+
+    @Update("update Users set Users(userName,userTel,userPassword,userIp,userPos) " +
+            "values(#{userName_},#{userTel_},#{userPassword_},#{userIp_},#{userPos_})")
+    int updateAll(@Param("user")TestProto.User user, @Param("un") String un);
 }

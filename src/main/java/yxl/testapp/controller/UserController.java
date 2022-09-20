@@ -64,6 +64,60 @@ public class UserController {
         return userService.register(temp);
     }
 
+    /**
+     * 修改密码
+     * */
+    @PostMapping("/updatepwd")
+    public byte[] updatepwd(@RequestBody byte[] data){
+        byte[] temp =protocolUtil.decodeProtocol(data);
+        if(temp==null){
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEPWD,OptionDetails.PROTOBUF_ERROR));
+            TestProto.S2C_UpdatePwd.Builder result=TestProto.S2C_UpdatePwd.newBuilder();
+            result.setStatus(false);
+            result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
+            byte[] bytes=result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes,bytes.length,TestProto.Types.S2C_UPDATEPWD);
+        }
+        return userService.updatepwd(temp);
+    }
+
+
+    /**
+     * 修改邮箱
+     * */
+    @PostMapping("/updateemail")
+    public byte[] updateemail(@RequestBody byte[] data){
+        byte[] temp =protocolUtil.decodeProtocol(data);
+        if(temp==null){
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEEMAIL,OptionDetails.PROTOBUF_ERROR));
+            TestProto.S2C_UpdatePwd.Builder result=TestProto.S2C_UpdatePwd.newBuilder();
+            result.setStatus(false);
+            result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
+            byte[] bytes=result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes,bytes.length,TestProto.Types.S2C_UPDATEEMAIL);
+        }
+        return userService.updateEmail(temp);
+    }
+
+    /**
+     * 修改全部信息
+     * */
+    @PostMapping("/updateall")
+    public byte[] updateall(@RequestBody byte[] data){
+        byte[] temp =protocolUtil.decodeProtocol(data);
+        if(temp==null){
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEALL,OptionDetails.PROTOBUF_ERROR));
+            TestProto.S2C_UpdatePwd.Builder result=TestProto.S2C_UpdatePwd.newBuilder();
+            result.setStatus(false);
+            result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
+            byte[] bytes=result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes,bytes.length,TestProto.Types.S2C_UPDATEALL);
+        }
+        return userService.updateAll(temp);
+    }
+
+
+
 
     /**
      * 无check测试

@@ -32,8 +32,19 @@ public enum OptionDetails {
 
 
     //注册
-    REGISTER_TEL_EXIST("注册失败","此电话已存在"), REGISTER_OK("注册成功", "注册成功");
+    REGISTER_TEL_EXIST("注册失败","此电话已存在"), REGISTER_OK("注册成功", "注册成功"),
 
+    //修改密码
+    UPDATE_OK("修改成功","修改成功"),
+
+    //修改邮箱
+    UPDATEEMAIL_OK("修改成功","修改成功"),
+
+    //修改全部
+    UPDATEALL_OK("修改成功","修改成功"),
+
+    //修改电话
+    UPDATETEL_OK("修改成功","修改成功");
 
     private String status;
     private String msg;
