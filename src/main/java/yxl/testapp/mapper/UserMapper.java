@@ -74,7 +74,7 @@ public interface UserMapper {
     @Select("select userId,userName,userTel,userEmail,userPassword,userType,userMoney,userCompany,userHome,userIp,userPos" +
             " from Users " +
             "where userTel = #{tel}")
-    TestProto.User findUserByTel(@Param("tel")String userTel);
+    TestProto.User findUserByTel(@Param("tel") String userTel);
 
     /**
      * 通过ID查询用户
@@ -96,6 +96,7 @@ public interface UserMapper {
             " from Users " +
             "where userId = #{id}")
     TestProto.User findUserById(@Param("id") int id);
+
     /**
      * 添加用户
      */
@@ -112,22 +113,22 @@ public interface UserMapper {
     /**
      * 修改密码
      */
-    
+
     @Update("update Users set userPassword =#{pwd} where userId=#{id}")
     int updateUserPwdById(@Param("pwd") String pwd, @Param("id") int id);
 
     /**
      * 修改邮箱
      */
-    
+
     @Update("update Users set userEmail =#{userEmail} where userId=#{id}")
-    int  updateUserEmailById(@Param("userEmail") String userEmail, @Param("id") int id);
+    int updateUserEmailById(@Param("userEmail") String userEmail, @Param("id") int id);
 
     @Update("update Users set userTel =#{userTel} where userId=#{id}")
     int updateUserTelById(@Param("id") int id, @Param("userTel") String userTel);
 
     @Select("select userEmail from Users where userEmail = #{userEmail}")
-    TestProto.User findUserByEmail(@Param("userEmail")String userEmail);
+    TestProto.User findUserByEmail(@Param("userEmail") String userEmail);
 
 
     @Update("update Users set userName=#{userName_},userIp=#{userIp_},userPos=#{userPos_}," +
@@ -137,6 +138,6 @@ public interface UserMapper {
 
 
     @Update("update Users set userEmail =#{email} where userId=#{id}")
-    int insertUserEmailById(@Param("email") String email,@Param("id") int id);
+    int insertUserEmailById(@Param("email") String email, @Param("id") int id);
 
 }

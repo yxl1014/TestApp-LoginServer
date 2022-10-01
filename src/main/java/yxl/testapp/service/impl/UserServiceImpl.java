@@ -215,7 +215,7 @@ public class UserServiceImpl implements UserService {
         try {
             builder = TestProto.C2S_UpdatePwd.parseFrom(data);
         } catch (InvalidProtocolBufferException e) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEPWD, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_PWD, OptionDetails.PROTOBUF_ERROR));
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
             byte[] bytes = result.buildPartial().toByteArray();
@@ -227,7 +227,7 @@ public class UserServiceImpl implements UserService {
         TestProto.User ok = userMapper.findUserById(id);
         if (ok == null) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEPWD, OptionDetails.UPDATEPWD_ERROR_NOFOUNDID));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_PWD, OptionDetails.UPDATEPWD_ERROR_NOFOUNDID));
 
             result.setStatus(false);
             result.setMsg(OptionDetails.UPDATEPWD_ERROR_NOFOUNDID.getMsg());
@@ -239,13 +239,13 @@ public class UserServiceImpl implements UserService {
 
         if (flag == 0) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEPWD, OptionDetails.SYSTEM_ERROR, user));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_PWD, OptionDetails.SYSTEM_ERROR, user));
 
             result.setStatus(false);
             result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
         } else {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEPWD, OptionDetails.REGISTER_OK));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_PWD, OptionDetails.REGISTER_OK));
 
             result.setStatus(true);
             result.setMsg(OptionDetails.UPDATEPWD_OK.getMsg());
@@ -264,7 +264,7 @@ public class UserServiceImpl implements UserService {
         try {
             builder = TestProto.C2S_UpdateEmail.parseFrom(data);
         } catch (InvalidProtocolBufferException e) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEEMAIL, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_EMAIL, OptionDetails.PROTOBUF_ERROR));
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
             byte[] bytes = result.buildPartial().toByteArray();
@@ -276,7 +276,7 @@ public class UserServiceImpl implements UserService {
         TestProto.User ok = userMapper.findUserById(id);
         if (ok == null) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEEMAIL, OptionDetails.UPDATEEMAIL_ERROR_ID_NOTFOUND));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_EMAIL, OptionDetails.UPDATEEMAIL_ERROR_ID_NOTFOUND));
 
             result.setStatus(false);
             result.setMsg(OptionDetails.UPDATEPWD_ERROR_NOFOUNDID.getMsg());
@@ -286,7 +286,7 @@ public class UserServiceImpl implements UserService {
         TestProto.User ok1 = userMapper.findUserByEmail(userEemail);
         if (ok1 != null) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEEMAIL, OptionDetails.UPDATEEMAIL_ERROR_EMAIL_EXIST));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_EMAIL, OptionDetails.UPDATEEMAIL_ERROR_EMAIL_EXIST));
 
             result.setStatus(false);
             result.setMsg(OptionDetails.UPDATEEMAIL_ERROR_ID_NOTFOUND.getMsg());
@@ -297,13 +297,13 @@ public class UserServiceImpl implements UserService {
 
         if (flag == 0) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEEMAIL, OptionDetails.SYSTEM_ERROR, user));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_EMAIL, OptionDetails.SYSTEM_ERROR, user));
 
             result.setStatus(false);
             result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
         } else {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEEMAIL, OptionDetails.REGISTER_OK));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_EMAIL, OptionDetails.REGISTER_OK));
 
             result.setStatus(true);
             result.setMsg(OptionDetails.UPDATEEMAIL_OK.getMsg());
@@ -321,7 +321,7 @@ public class UserServiceImpl implements UserService {
         try {
             builder = TestProto.C2S_UpdateTel.parseFrom(data);
         } catch (InvalidProtocolBufferException e) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATETEL, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_TEL, OptionDetails.PROTOBUF_ERROR));
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
             byte[] bytes = result.buildPartial().toByteArray();
@@ -333,7 +333,7 @@ public class UserServiceImpl implements UserService {
         TestProto.User ok = userMapper.findUserById(id);
         if (ok != null) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATETEL, OptionDetails.UPDATEEMAIL_ERROR_ID_NOTFOUND));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_TEL, OptionDetails.UPDATEEMAIL_ERROR_ID_NOTFOUND));
             result.setStatus(false);
             result.setMsg(OptionDetails.UPDATEEMAIL_ERROR_ID_NOTFOUND.getMsg());
             byte[] bytes = result.buildPartial().toByteArray();
@@ -342,7 +342,7 @@ public class UserServiceImpl implements UserService {
         TestProto.User ok1 = userMapper.findUserByTel(userTel);
         if (ok1 != null) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATETEL, OptionDetails.UPDATEEMAIL_ERROR_EMAIL_EXIST));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_TEL, OptionDetails.UPDATEEMAIL_ERROR_EMAIL_EXIST));
 
             result.setStatus(false);
             result.setMsg(OptionDetails.UPDATEEMAIL_ERROR_EMAIL_EXIST.getMsg());
@@ -353,13 +353,13 @@ public class UserServiceImpl implements UserService {
 
         if (flag == 0) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATETEL, OptionDetails.SYSTEM_ERROR, user));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_TEL, OptionDetails.SYSTEM_ERROR, user));
 
             result.setStatus(false);
             result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
         } else {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATETEL, OptionDetails.REGISTER_OK));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_TEL, OptionDetails.REGISTER_OK));
             result.setStatus(true);
             result.setMsg(OptionDetails.UPDATEEMAIL_OK.getMsg());
         }
@@ -376,7 +376,7 @@ public class UserServiceImpl implements UserService {
         try {
             builder = TestProto.C2S_UpdateAll.parseFrom(data);
         } catch (InvalidProtocolBufferException e) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEALL, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_ALL, OptionDetails.PROTOBUF_ERROR));
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
             byte[] bytes = result.buildPartial().toByteArray();
@@ -385,19 +385,19 @@ public class UserServiceImpl implements UserService {
         TestProto.User user = builder.getUser();
         TestProto.User.Builder old = userMapper.findUserById(user.getUserId()).toBuilder();
 
-        if (user.getUserName() != null) {
+        if (!user.getUserName().isEmpty()) {
             old.setUserName(user.getUserName());
         }
-        if (user.getUserCompany() != null) {
+        if (!user.getUserCompany().isEmpty()) {
             old.setUserCompany(user.getUserCompany());
         }
-        if (user.getUserHome() != null) {
+        if (!user.getUserHome().isEmpty()) {
             old.setUserHome(user.getUserHome());
         }
-        if (user.getUserPos() != null) {
+        if (!user.getUserPos().isEmpty()) {
             old.setUserPos(user.getUserPos());
         }
-        if (user.getUserIp() != null) {
+        if (!user.getUserIp().isEmpty()) {
             old.setUserIp(user.getUserIp());
         }
 
@@ -407,7 +407,7 @@ public class UserServiceImpl implements UserService {
         TestProto.User ok = userMapper.findUserById(id);
         if (ok == null) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEALL, OptionDetails.UPDATEALL_ERROR_ID_NOTFOUND));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_ALL, OptionDetails.UPDATEALL_ERROR_ID_NOTFOUND));
 
             result.setStatus(false);
             result.setMsg(OptionDetails.UPDATEALL_ERROR_ID_NOTFOUND.getMsg());
@@ -420,13 +420,13 @@ public class UserServiceImpl implements UserService {
         System.out.println(flag);
         if (flag == 0) {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEALL, OptionDetails.SYSTEM_ERROR, user));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_ALL, OptionDetails.SYSTEM_ERROR, user));
 
             result.setStatus(false);
             result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
         } else {
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEALL, OptionDetails.REGISTER_OK));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_ALL, OptionDetails.REGISTER_OK));
 
             result.setStatus(true);
             result.setMsg(OptionDetails.UPDATEALL_OK.getMsg());
@@ -449,7 +449,7 @@ public class UserServiceImpl implements UserService {
             builder = TestProto.C2S_BindMailBox.parseFrom(data);
         } catch (InvalidProtocolBufferException e) {
 
-            logger.info(LogUtil.makeOptionDetails(LogMsg.BINDMAILBOX, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.PROTOBUF_ERROR));
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
             byte[] bytes = result.buildPartial().toByteArray();
@@ -460,7 +460,7 @@ public class UserServiceImpl implements UserService {
         int uid = builder.getUser().getUserId();
         TestProto.User user = userMapper.findUserById(uid);
         if (user.getUserEmail() != null) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.BINDMAILBOX, OptionDetails.BINDMAILBOX_ERROR_MAILBOX_EXIST));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.BINDMAILBOX_ERROR_MAILBOX_EXIST));
             result.setStatus(false);
             result.setMsg(OptionDetails.BINDMAILBOX_ERROR_MAILBOX_EXIST.getMsg());
             byte[] bytes = result.buildPartial().toByteArray();
@@ -471,13 +471,13 @@ public class UserServiceImpl implements UserService {
         String code = bindMailBoxUtil.randomCode();
         boolean flag = bindMailBoxUtil.sendEMail(email, code, mailSender,redisTemplate);
         if (flag == false) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.BINDMAILBOX, OptionDetails.BINDMAILBOX_ERROR_CODE_FAIL, user));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.BINDMAILBOX_ERROR_CODE_FAIL, user));
             result.setStatus(false);
             result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
         } else {
 
             //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.BINDMAILBOX, OptionDetails.BINDMAILBOX_OK));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.BINDMAILBOX_OK));
             result.setStatus(true);
             result.setMsg(OptionDetails.BINDMAILBOX_OK.getMsg());
 
@@ -496,7 +496,7 @@ public class UserServiceImpl implements UserService {
         try {
             builder = TestProto.C2S_CheckMailBox.parseFrom(data);
         } catch (InvalidProtocolBufferException e) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.CHECKEMAILBOX, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.CHECK_MAILBOX, OptionDetails.PROTOBUF_ERROR));
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
             byte[] bytes = result.buildPartial().toByteArray();
@@ -510,19 +510,19 @@ public class UserServiceImpl implements UserService {
 
         boolean flag = bindMailBoxUtil.checkCode(userEmail,code,redisTemplate);
         if (flag == false) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.BINDMAILBOX, OptionDetails.BINDMAILBOX_ERROR_CODE_FAIL, user));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.BINDMAILBOX_ERROR_CODE_FAIL, user));
             result.setStatus(false);
             result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
         }
         if(flag == true){
             int flag1=userMapper.insertUserEmailById(userEmail,id);
             if(flag1 == 0){
-                logger.info(LogUtil.makeOptionDetails(LogMsg.CHECKEMAILBOX, OptionDetails.CHECKEMAILBOX_ERROR, user));
+                logger.info(LogUtil.makeOptionDetails(LogMsg.CHECK_MAILBOX, OptionDetails.CHECKEMAILBOX_ERROR, user));
                 result.setStatus(false);
                 result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
             }
             else {
-                logger.info(LogUtil.makeOptionDetails(LogMsg.CHECKEMAILBOX, OptionDetails.CHECKEMAILBOX_OK));
+                logger.info(LogUtil.makeOptionDetails(LogMsg.CHECK_MAILBOX, OptionDetails.CHECKEMAILBOX_OK));
                 result.setStatus(true);
                     result.setMsg(OptionDetails.CHECKEMAILBOX_OK.getMsg());
 
