@@ -2,9 +2,7 @@ package yxl.testapp.controller;
 
 
 import org.apache.logging.log4j.Logger;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import yxl.testapp.annotation.Check;
 import pto.TestProto;
@@ -30,7 +28,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
 
 
     /**
@@ -75,7 +72,7 @@ public class UserController {
     public byte[] updatePwdByTel(@RequestBody byte[] data) {
         byte[] temp = protocolUtil.decodeProtocol(data);
         if (temp == null) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEPWD, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_PWD, OptionDetails.PROTOBUF_ERROR));
             TestProto.S2C_UpdatePwd.Builder result = TestProto.S2C_UpdatePwd.newBuilder();
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
@@ -94,7 +91,7 @@ public class UserController {
     public byte[] updatEemailByTel(@RequestBody byte[] data) {
         byte[] temp = protocolUtil.decodeProtocol(data);
         if (temp == null) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEEMAIL, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_EMAIL, OptionDetails.PROTOBUF_ERROR));
             TestProto.S2C_UpdatePwd.Builder result = TestProto.S2C_UpdatePwd.newBuilder();
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
@@ -111,7 +108,7 @@ public class UserController {
     public byte[] updateTelByEml(@RequestBody byte[] data) {
         byte[] temp = protocolUtil.decodeProtocol(data);
         if (temp == null) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATETEL, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_TEL, OptionDetails.PROTOBUF_ERROR));
             TestProto.S2C_UpdateTel.Builder result = TestProto.S2C_UpdateTel.newBuilder();
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
@@ -128,7 +125,7 @@ public class UserController {
     public byte[] updateAllByTel(@RequestBody byte[] data) {
         byte[] temp = protocolUtil.decodeProtocol(data);
         if (temp == null) {
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEALL, OptionDetails.PROTOBUF_ERROR));
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATE_ALL, OptionDetails.PROTOBUF_ERROR));
             TestProto.S2C_UpdatePwd.Builder result = TestProto.S2C_UpdatePwd.newBuilder();
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
@@ -143,7 +140,7 @@ public class UserController {
     public byte[] bindMailox(@RequestBody byte[] data) {
         byte[] temp = protocolUtil.decodeProtocol(data);
         if (temp == null) {
-            logger.info((LogUtil.makeOptionDetails(LogMsg.BINDMAILBOX, OptionDetails.PROTOBUF_ERROR)));
+            logger.info((LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.PROTOBUF_ERROR)));
             TestProto.S2C_BindMailBox.Builder result = TestProto.S2C_BindMailBox.newBuilder();
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOCOL_ERROR.getMsg());
@@ -158,14 +155,13 @@ public class UserController {
     public byte[] checkMailox(@RequestBody byte[] data) {
         byte[] temp = protocolUtil.decodeProtocol(data);
         if (temp == null) {
-            logger.info((LogUtil.makeOptionDetails(LogMsg.BINDMAILBOX, OptionDetails.PROTOBUF_ERROR)));
+            logger.info((LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.PROTOBUF_ERROR)));
             TestProto.S2C_CheckMailBox.Builder result = TestProto.S2C_CheckMailBox.newBuilder();
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOCOL_ERROR.getMsg());
             byte[] bytes = result.buildPartial().toByteArray();
             return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_BINDMAILBOX);
         }
-        System.out.println("zzz");
         return userService.checkMailBox(temp);
     }
 
