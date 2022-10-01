@@ -34,18 +34,29 @@ public enum OptionDetails {
     //注册
     REGISTER_TEL_EXIST("注册失败","此电话已存在"), REGISTER_OK("注册成功", "注册成功"),
 
+
     //修改密码
-    UPDATE_OK("修改成功","修改成功"),
+    UPDATEPWD_OK("修改成功","修改成功"),UPDATEPWD_ERROR_NOFOUNDID("修改失败","未找到用户id"),
+    UPDATEPWD_ERRORONE_TEL_NOTFOUND("修改失败","未找到该电话"),
 
     //修改邮箱
-    UPDATEEMAIL_OK("修改成功","修改成功"),
+    UPDATEEMAIL_OK("修改成功","修改成功"),UPDATEEMAIL_ERROR_ID_NOTFOUND("修改失败","未找到用户id"),
+    UPDATEEMAIL_ERROR_EMAIL_EXIST("修改失败","此邮箱已注册"),
 
     //修改全部
-    UPDATEALL_OK("修改成功","修改成功"),
+    UPDATEALL_OK("修改成功","修改成功"),UPDATEALL_ERROR_ID_NOTFOUND("修改失败","未找到此电话，无法修改"),
 
     //修改电话
-    UPDATETEL_OK("修改成功","修改成功");
+    UPDATETEL_OK("修改成功","修改成功"),UPDATETEL_ERROR_TEL_EXIST("修改失败","此电话已注册"),
+    UPDATE_ERROR_ID_NOTFOUND("修改失败","未找到此邮箱"),
 
+
+    //绑定邮箱
+    BINDMAILBOX_OK("邮箱绑定成功","验证码发送成功"),BINDMAILBOX_ERROR_MAILBOX_EXIST("邮箱绑定失败","此邮箱已被绑定"),
+    BINDMAILBOX_ERROR_CODE_FAIL("邮箱绑定失败","验证码未发送"),
+
+    //验证邮箱
+    CHECKEMAILBOX_OK("验证邮箱成功","验证成功"),CHECKEMAILBOX_ERROR("验证邮箱失败","验证码不正确");
     private String status;
     private String msg;
 

@@ -10,12 +10,18 @@ enum Types{
   S2C_LOGIN = 2;
   C2S_REGISTER = 3;
   S2C_REGISTER = 4;
-  C2C_UPDATEPWD=5;
+  C2S_UPDATEPWD=5;
   S2C_UPDATEPWD=6;
-  C2C_UPDATEEMAIL=7;
+  C2S_UPDATEEMAIL=7;
   S2C_UPDATEEMAIL=8;
-  C2C_UPDATEALL=9;
+  C2S_UPDATEALL=9;
   S2C_UPDATEALL=10;
+  C2S_UPDATETEL=11;
+  S2C_UPDATETEL=12;
+  C2S_BINDMAILBOX=13;
+  S2C_BINDMAILBOX=14;
+  C2S_CHECKMAILBOX=15;
+  S2C_CHECKMAILBOX=16;
 
 }
 
@@ -32,6 +38,7 @@ message User{
   optional string userHome = 9;
   optional string userIp = 10;
   optional string userPos = 11;
+
 }
 
 message C2S_Login{
@@ -74,6 +81,16 @@ message S2C_UpdateEmail{
   string msg = 2;
 }
 
+//修改电话
+message C2S_UpdateTel {
+  User user = 1;
+}
+
+message S2C_UpdateTel{
+  bool status = 1;
+  string msg = 2;
+}
+
 //修改全部信息
 message C2S_UpdateAll {
   User user = 1;
@@ -84,8 +101,34 @@ message S2C_UpdateAll{
   string msg = 2;
 }
 
+//redis缓存
+message Redis_Test{
+  string un = 1;
+  string pwd = 2;
+}
 
 
+//邮箱绑定
+message C2S_BindMailBox {
+  User user = 1;
+}
+
+message S2C_BindMailBox{
+  bool status = 1;
+  string msg = 2;
+}
+
+
+//验证邮箱
+message C2S_CheckMailBox{
+  string code = 1;
+  User user = 2;
+}
+
+message S2C_CheckMailBox{
+  bool status = 1;
+  string msg = 2;
+}
 
 //--------------------MainServer--------------------
 

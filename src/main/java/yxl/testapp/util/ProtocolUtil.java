@@ -18,8 +18,14 @@ public class ProtocolUtil {
      */
     public byte[] decodeProtocol(byte[] data) {
         byte[] temp = new byte[4];
-        System.arraycopy(data, 0, temp, 0, 4);
 
+        System.arraycopy(data, 0, temp, 0, 4);
+/*      Object src : 原数组
+        int srcPos : 从元数据的起始位置开始
+        Object dest : 目标数组
+        int destPos : 目标数组的开始起始位置
+        int length : 要copy的数组的长度
+*/
 
         int len = FinalData.byteArrayToInt(temp);
         System.arraycopy(data, 4, temp, 0, 4);

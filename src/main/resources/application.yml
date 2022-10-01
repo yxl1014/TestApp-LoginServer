@@ -7,6 +7,33 @@ spring:
     username: root
     password: root
     url: jdbc:mysql://localhost:3306/testapp_V2
+  mail:
+    host: "smtp.163.com" # 发件服务器地址,不同邮件平台地址不同
+    port: 25 #常用邮件端口25、109、110、143、465、995、993、994 如果开启了SSL安全则使用对应的端口号，25为非加密端口号
+    username: l17660687587@163.com #发送邮件的账号
+    #这个密码怎么获取 看这个网址 https://blog.csdn.net/qq_41681904/article/details/124276026
+    password: IERJLXKTRXOYFMJW #发送邮件账号的授权码,这里的授权码不是验证码.需要到邮箱
+    default-encoding: utf-8 #设置编码
+    properties: # 设置邮件超时时间防止服务器阻塞
+      timeout: 5000
+      connection-timeout: 5000
+      write-timeout: 5000
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3000
+    pool:
+      # 连接池最大连接数（使用负值表示没有限制）
+      max-active: 8
+      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-wait: -1
+      # 连接池中的最大空闲连接
+      max-idle: 8
+      # 连接池中的最小空闲连接
+      min-idle: 0
+
+
 logging:
   charset:
     file: UTF-8
@@ -14,3 +41,4 @@ logging:
     root: info
   file:
     path: log/
+

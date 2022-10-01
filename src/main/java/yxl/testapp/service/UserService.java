@@ -18,8 +18,16 @@ public interface UserService {
 
     byte[] register(byte[] data);
 
-    byte[] updatepwd(byte[] data);
+    byte[] updatePwdById(byte[] data);
 
-    byte[] updateEmail(byte[] data);
-    byte[] updateAll(byte[] data);
+    byte[] updateEmailById(byte[] data);
+
+    byte[] updateAllById(byte[] data);
+
+    byte[] updateTelById(byte[] data);
+
+    byte[] bindMailBox(byte[] data);
+
+    byte[] checkMailBox(byte[] data);
+
 }
