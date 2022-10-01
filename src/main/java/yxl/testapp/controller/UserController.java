@@ -2,7 +2,9 @@ package yxl.testapp.controller;
 
 
 import org.apache.logging.log4j.Logger;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import yxl.testapp.annotation.Check;
 import pto.TestProto;
@@ -30,11 +32,12 @@ public class UserController {
     private UserService userService;
 
 
+
     /**
      * 登录
-     * */
+     */
     @PostMapping("/login")
-    public byte[] login(@RequestBody byte[] data){
+    public byte[] login(@RequestBody byte[] data) {
         byte[] temp = protocolUtil.decodeProtocol(data);
         if (temp == null) {
             logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.PROTOBUF_ERROR));
@@ -49,9 +52,9 @@ public class UserController {
 
     /**
      * 注册
-     * */
+     */
     @PostMapping("/register")
-    public byte[] register(@RequestBody byte[] data){
+    public byte[] register(@RequestBody byte[] data) {
         byte[] temp = protocolUtil.decodeProtocol(data);
         if (temp == null) {
             logger.info(LogUtil.makeOptionDetails(LogMsg.REGISTER, OptionDetails.PROTOBUF_ERROR));
@@ -66,62 +69,110 @@ public class UserController {
 
     /**
      * 修改密码
-     * */
-    @PostMapping("/updatepwd")
-    public byte[] updatepwd(@RequestBody byte[] data){
-        byte[] temp =protocolUtil.decodeProtocol(data);
-        if(temp==null){
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEPWD,OptionDetails.PROTOBUF_ERROR));
-            TestProto.S2C_UpdatePwd.Builder result=TestProto.S2C_UpdatePwd.newBuilder();
+     */
+
+    @PostMapping("/updatePwdById")
+    public byte[] updatePwdByTel(@RequestBody byte[] data) {
+        byte[] temp = protocolUtil.decodeProtocol(data);
+        if (temp == null) {
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEPWD, OptionDetails.PROTOBUF_ERROR));
+            TestProto.S2C_UpdatePwd.Builder result = TestProto.S2C_UpdatePwd.newBuilder();
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
-            byte[] bytes=result.buildPartial().toByteArray();
-            return protocolUtil.encodeProtocol(bytes,bytes.length,TestProto.Types.S2C_UPDATEPWD);
+            byte[] bytes = result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_UPDATEPWD);
         }
-        return userService.updatepwd(temp);
+        return userService.updatePwdById(temp);
     }
 
 
     /**
      * 修改邮箱
-     * */
-    @PostMapping("/updateemail")
-    public byte[] updateemail(@RequestBody byte[] data){
-        byte[] temp =protocolUtil.decodeProtocol(data);
-        if(temp==null){
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEEMAIL,OptionDetails.PROTOBUF_ERROR));
-            TestProto.S2C_UpdatePwd.Builder result=TestProto.S2C_UpdatePwd.newBuilder();
+     */
+    @PostMapping("/updateEmailById")
+
+    public byte[] updatEemailByTel(@RequestBody byte[] data) {
+        byte[] temp = protocolUtil.decodeProtocol(data);
+        if (temp == null) {
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEEMAIL, OptionDetails.PROTOBUF_ERROR));
+            TestProto.S2C_UpdatePwd.Builder result = TestProto.S2C_UpdatePwd.newBuilder();
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
-            byte[] bytes=result.buildPartial().toByteArray();
-            return protocolUtil.encodeProtocol(bytes,bytes.length,TestProto.Types.S2C_UPDATEEMAIL);
+            byte[] bytes = result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_UPDATEEMAIL);
         }
-        return userService.updateEmail(temp);
+        return userService.updateEmailById(temp);
+    }
+
+    /**
+     * 修改电话
+     */
+    @PostMapping("/updateTelById")
+    public byte[] updateTelByEml(@RequestBody byte[] data) {
+        byte[] temp = protocolUtil.decodeProtocol(data);
+        if (temp == null) {
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATETEL, OptionDetails.PROTOBUF_ERROR));
+            TestProto.S2C_UpdateTel.Builder result = TestProto.S2C_UpdateTel.newBuilder();
+            result.setStatus(false);
+            result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
+            byte[] bytes = result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_UPDATETEL);
+        }
+        return userService.updateTelById(temp);
     }
 
     /**
      * 修改全部信息
-     * */
-    @PostMapping("/updateall")
-    public byte[] updateall(@RequestBody byte[] data){
-        byte[] temp =protocolUtil.decodeProtocol(data);
-        if(temp==null){
-            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEALL,OptionDetails.PROTOBUF_ERROR));
-            TestProto.S2C_UpdatePwd.Builder result=TestProto.S2C_UpdatePwd.newBuilder();
+     */
+    @PostMapping("/updateAllById")
+    public byte[] updateAllByTel(@RequestBody byte[] data) {
+        byte[] temp = protocolUtil.decodeProtocol(data);
+        if (temp == null) {
+            logger.info(LogUtil.makeOptionDetails(LogMsg.UPDATEALL, OptionDetails.PROTOBUF_ERROR));
+            TestProto.S2C_UpdatePwd.Builder result = TestProto.S2C_UpdatePwd.newBuilder();
             result.setStatus(false);
             result.setMsg(OptionDetails.PROTOBUF_ERROR.getMsg());
-            byte[] bytes=result.buildPartial().toByteArray();
-            return protocolUtil.encodeProtocol(bytes,bytes.length,TestProto.Types.S2C_UPDATEALL);
+            byte[] bytes = result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_UPDATEALL);
         }
-        return userService.updateAll(temp);
+        return userService.updateAllById(temp);
     }
 
 
+    @PostMapping("/bindMailbox")
+    public byte[] bindMailox(@RequestBody byte[] data) {
+        byte[] temp = protocolUtil.decodeProtocol(data);
+        if (temp == null) {
+            logger.info((LogUtil.makeOptionDetails(LogMsg.BINDMAILBOX, OptionDetails.PROTOBUF_ERROR)));
+            TestProto.S2C_BindMailBox.Builder result = TestProto.S2C_BindMailBox.newBuilder();
+            result.setStatus(false);
+            result.setMsg(OptionDetails.PROTOCOL_ERROR.getMsg());
+            byte[] bytes = result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_BINDMAILBOX);
+        }
+
+        return userService.bindMailBox(temp);
+    }
+
+    @PostMapping("/checkMailbox")
+    public byte[] checkMailox(@RequestBody byte[] data) {
+        byte[] temp = protocolUtil.decodeProtocol(data);
+        if (temp == null) {
+            logger.info((LogUtil.makeOptionDetails(LogMsg.BINDMAILBOX, OptionDetails.PROTOBUF_ERROR)));
+            TestProto.S2C_CheckMailBox.Builder result = TestProto.S2C_CheckMailBox.newBuilder();
+            result.setStatus(false);
+            result.setMsg(OptionDetails.PROTOCOL_ERROR.getMsg());
+            byte[] bytes = result.buildPartial().toByteArray();
+            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_BINDMAILBOX);
+        }
+        System.out.println("zzz");
+        return userService.checkMailBox(temp);
+    }
 
 
     /**
      * 无check测试
-     * */
+     */
     @GetMapping("/")
     @ResponseBody
     public String test() {
@@ -132,11 +183,11 @@ public class UserController {
 
     /**
      * 有check测试
-     * */
+     */
     @GetMapping("/check")
     @ResponseBody
     @Check
-    public String test1(){
+    public String test1() {
         return "hello";
     }
 

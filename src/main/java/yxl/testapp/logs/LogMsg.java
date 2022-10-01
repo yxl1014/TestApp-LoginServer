@@ -9,7 +9,8 @@ public enum LogMsg {
     //测试
     TEST("测试一下"),
     LOGIN("登录操作"), REGISTER("注册操作"),INTERCEPTOR("拦截器"),UPDATEPWD("修改密码"),
-    UPDATEEMAIL("修改邮箱"),UPDATEALL("修改全部"),UPDATETEL("修改电话")
+    UPDATEEMAIL("修改邮箱"),UPDATEALL("修改全部"),UPDATETEL("修改电话"),BINDMAILBOX("绑定邮箱"),
+    CHECKEMAILBOX("验证邮箱")
     ;
 
 
