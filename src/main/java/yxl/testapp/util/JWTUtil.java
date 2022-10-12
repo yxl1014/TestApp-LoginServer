@@ -57,6 +57,7 @@ public class JWTUtil {
         byte[] bytes = builder.setUserPassword("123456").build().toByteArray();
 
         String token = JWTUtil.sign(bytes, 3000);
+        System.out.println(token);
 
         byte[] data = JWTUtil.unsign(token, byte[].class);
         TestProto.User user = TestProto.User.parseFrom(data);
