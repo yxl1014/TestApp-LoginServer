@@ -17,6 +17,9 @@ public class BindMailBoxUtil {
 
     private Random random = new Random();
 
+    @Autowired
+    private RedisUtil redisUtil;
+
 
     //可换成redis，存储验证码
 //     public static HashMap<String, String> emails = new HashMap<>();
@@ -35,12 +38,11 @@ public class BindMailBoxUtil {
 
 
     //发送验证码
-    public Boolean sendEMail(String email, String code, JavaMailSender mailSender, RedisTemplate redisTemplate) {
+    public Boolean sendEMail(String email, String code, JavaMailSender mailSender, RedisUtil redisUtil) {
 
 
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+        redisUtil.insterKey(email,code);
 //        this.emails.put(email, code);
-        operations.set(email,code);
         try {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setFrom("l17660687587@163.com"); //设置发送邮件账号
@@ -59,10 +61,10 @@ public class BindMailBoxUtil {
 
     //验证邮箱验证码
 //    public boolean checkCode(@RequestParam("e") String email, @RequestParam("c") String code) {
-    public Boolean checkCode(String email, String code ,RedisTemplate redisTemplate) {
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        String c=operations.get(email);
-        if(c.equals(code)){
+    public Boolean checkCode(String email, String code ,RedisUtil redisUtil) {
+        String s=redisUtil.findKey(email);
+
+        if(s.equals(code)){
             return true;
         }else {
             return false;
