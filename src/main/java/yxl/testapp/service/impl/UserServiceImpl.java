@@ -13,10 +13,7 @@ import yxl.testapp.logs.LogUtil;
 import yxl.testapp.logs.OptionDetails;
 import yxl.testapp.mapper.UserMapper;
 import yxl.testapp.service.UserService;
-import yxl.testapp.util.BindMailBoxUtil;
-import yxl.testapp.util.FinalData;
-import yxl.testapp.util.JWTUtil;
-import yxl.testapp.util.ProtocolUtil;
+import yxl.testapp.util.*;
 
 /**
  * @author yxl
@@ -31,11 +28,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ProtocolUtil protocolUtil;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -56,29 +54,24 @@ public class UserServiceImpl implements UserService {
             return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
         }
         //缓存
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+
 
 //        int type = builder.getLoginType();
         int type = 0;
 
-        String un;
+        String un = builder.getUser().getUserTel();
         String pwd = builder.getUser().getUserPassword();
-        String testpwd;
         TestProto.User user = null;
         switch (type) {
             case 0: {
 
                 un = builder.getUser().getUserTel();
                 //检查缓存是否存在
-                boolean hasKey = redisTemplate.hasKey(un);
-                if (hasKey) {
-                    testpwd = operations.get(un);
-                    if (testpwd.equals(pwd)) {
-                        result.setStatus(true);
-                        result.setMsg(OptionDetails.LOGIN_OK.getMsg());
-                        byte[] bytes = result.buildPartial().toByteArray();
-                        return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
-                    }
+                boolean hasKey = redisUtil.findKey(un, pwd);
+                if (hasKey == true) {
+                    result.setMsg(OptionDetails.LOGIN_OK.getMsg());
+                    byte[] bytes = result.buildPartial().toByteArray();
+                    return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
                 } else {
                     System.out.println("走数据库");
                     user = userMapper.findUserByTelAndPwd(un, pwd);
@@ -91,7 +84,7 @@ public class UserServiceImpl implements UserService {
                         byte[] bytes = result.buildPartial().toByteArray();
                         return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
                     }
-                    operations.set(user.getUserTel(), user.getUserPassword());
+                    redisUtil.insterKey(un, pwd);
                 }
 
                 break;
@@ -100,16 +93,11 @@ public class UserServiceImpl implements UserService {
 
                 un = builder.getUser().getUserTel();
                 //检查缓存是否存在
-                boolean hasKey = redisTemplate.hasKey(un);
-                if (hasKey) {
-                    testpwd = operations.get(un);
-                    if (testpwd == pwd) {
-                        result.setStatus(true);
-                        result.setMsg(OptionDetails.LOGIN_OK.getMsg());
-                        byte[] bytes = result.buildPartial().toByteArray();
-                        return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
-
-                    }
+                boolean hasKey = redisUtil.findKey(un, pwd);
+                if (hasKey == true) {
+                    result.setMsg(OptionDetails.LOGIN_OK.getMsg());
+                    byte[] bytes = result.buildPartial().toByteArray();
+                    return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
                 } else {
                     System.out.println("走数据库");
                     user = userMapper.findUserByTelAndPwd(un, pwd);
@@ -122,10 +110,11 @@ public class UserServiceImpl implements UserService {
                         byte[] bytes = result.buildPartial().toByteArray();
                         return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
                     }
-                    operations.set(user.getUserTel(), user.getUserPassword());
+                    redisUtil.insterKey(un, pwd);
+                }
 
                 break;
-                }
+
             }
             default:
                 logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.PARAM_ERROR));
@@ -135,22 +124,22 @@ public class UserServiceImpl implements UserService {
                 return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
         }
 
-            //日志
-            logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.LOGIN_OK, user));
+        //日志
+        logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.LOGIN_OK, user));
 
-            //ip地址出现变化，修改数据库
-            if (!user.getUserIp().equals(builder.getUser().getUserIp())) {
-                logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.UPDATE_IP));
-                userMapper.updateUserIPByUserId(builder.getUser().getUserIp(), user.getUserId());
-                userMapper.updateUserPosByUserId(builder.getUser().getUserPos(), user.getUserId());
-            }
-
-            result.setStatus(true);
-            result.setMsg(OptionDetails.LOGIN_OK.getMsg());
-            result.setToken(JWTUtil.sign(user.toBuilder().build().toByteArray(), FinalData.LOGIN_EXPIRES));
-            byte[] bytes = result.buildPartial().toByteArray();
-            return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
+        //ip地址出现变化，修改数据库
+        if (!user.getUserIp().equals(builder.getUser().getUserIp())) {
+            logger.info(LogUtil.makeOptionDetails(LogMsg.LOGIN, OptionDetails.UPDATE_IP));
+            userMapper.updateUserIPByUserId(builder.getUser().getUserIp(), user.getUserId());
+            userMapper.updateUserPosByUserId(builder.getUser().getUserPos(), user.getUserId());
         }
+
+        result.setStatus(true);
+        result.setMsg(OptionDetails.LOGIN_OK.getMsg());
+        result.setToken(JWTUtil.sign(user.toBuilder().build().toByteArray(), FinalData.LOGIN_EXPIRES));
+        byte[] bytes = result.buildPartial().toByteArray();
+        return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
+    }
 
 
     @Override
@@ -469,7 +458,7 @@ public class UserServiceImpl implements UserService {
 
 
         String code = bindMailBoxUtil.randomCode();
-        boolean flag = bindMailBoxUtil.sendEMail(email, code, mailSender,redisTemplate);
+        boolean flag = bindMailBoxUtil.sendEMail(email, code, mailSender, redisUtil);
         if (flag == false) {
             logger.info(LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.BINDMAILBOX_ERROR_CODE_FAIL, user));
             result.setStatus(false);
@@ -503,28 +492,27 @@ public class UserServiceImpl implements UserService {
             return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_CHECKMAILBOX);
 
         }
-        TestProto.User user=builder.getUser();
+        TestProto.User user = builder.getUser();
         String code = builder.getCode();
         String userEmail = builder.getUser().getUserEmail();
-        int id=builder.getUser().getUserId();
+        int id = builder.getUser().getUserId();
 
-        boolean flag = bindMailBoxUtil.checkCode(userEmail,code,redisTemplate);
+        boolean flag = bindMailBoxUtil.checkCode(userEmail, code , redisUtil);
         if (flag == false) {
             logger.info(LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.BINDMAILBOX_ERROR_CODE_FAIL, user));
             result.setStatus(false);
             result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
         }
-        if(flag == true){
-            int flag1=userMapper.insertUserEmailById(userEmail,id);
-            if(flag1 == 0){
+        if (flag == true) {
+            int flag1 = userMapper.insertUserEmailById(userEmail, id);
+            if (flag1 == 0) {
                 logger.info(LogUtil.makeOptionDetails(LogMsg.CHECK_MAILBOX, OptionDetails.CHECKEMAILBOX_ERROR, user));
                 result.setStatus(false);
                 result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
-            }
-            else {
+            } else {
                 logger.info(LogUtil.makeOptionDetails(LogMsg.CHECK_MAILBOX, OptionDetails.CHECKEMAILBOX_OK));
                 result.setStatus(true);
-                    result.setMsg(OptionDetails.CHECKEMAILBOX_OK.getMsg());
+                result.setMsg(OptionDetails.CHECKEMAILBOX_OK.getMsg());
 
             }
         }
