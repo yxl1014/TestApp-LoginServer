@@ -428,6 +428,9 @@ public class UserServiceImpl implements UserService {
     }
 
     //发送邮箱验证码
+    //TODO 这个方法不够解耦 他只需要给他个邮箱 然后发送验证码就够了 不用做其他的判断
+    //TODO 绑定邮箱的流程 第一步先调用这个方法获取验证码 第二步调用下面那个方法验证验证码 验证通过了下一步才会调用updateEmail方法绑定
+    //TODO 修改邮箱的流程 第一步先验证旧的邮箱，第二步验证新的邮箱，第三步再调用updateEmail方法绑定
     @Override
     public byte[] bindMailBox(byte[] data) {
         TestProto.S2C_BindMailBox.Builder result = TestProto.S2C_BindMailBox.newBuilder();
@@ -459,7 +462,7 @@ public class UserServiceImpl implements UserService {
 
         String code = bindMailBoxUtil.randomCode();
         boolean flag = bindMailBoxUtil.sendEMail(email, code, mailSender, redisUtil);
-        if (flag == false) {
+        if (!flag) {
             logger.info(LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.BINDMAILBOX_ERROR_CODE_FAIL, user));
             result.setStatus(false);
             result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
@@ -498,12 +501,12 @@ public class UserServiceImpl implements UserService {
         int id = builder.getUser().getUserId();
 
         boolean flag = bindMailBoxUtil.checkCode(userEmail, code , redisUtil);
-        if (flag == false) {
+        if (!flag) {
             logger.info(LogUtil.makeOptionDetails(LogMsg.BIND_MAILBOX, OptionDetails.BINDMAILBOX_ERROR_CODE_FAIL, user));
             result.setStatus(false);
             result.setMsg(OptionDetails.SYSTEM_ERROR.getMsg());
         }
-        if (flag == true) {
+        if (flag) {
             int flag1 = userMapper.insertUserEmailById(userEmail, id);
             if (flag1 == 0) {
                 logger.info(LogUtil.makeOptionDetails(LogMsg.CHECK_MAILBOX, OptionDetails.CHECKEMAILBOX_ERROR, user));
