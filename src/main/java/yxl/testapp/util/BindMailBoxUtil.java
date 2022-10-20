@@ -1,16 +1,10 @@
 package yxl.testapp.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.web.bind.annotation.RequestParam;
-import pto.TestProto;
-import yxl.testapp.logs.OptionDetails;
 
-import java.util.HashMap;
 import java.util.Random;
 
 public class BindMailBoxUtil {
@@ -41,7 +35,7 @@ public class BindMailBoxUtil {
     public Boolean sendEMail(String email, String code, JavaMailSender mailSender, RedisUtil redisUtil) {
 
 
-        redisUtil.insterKey(email,code);
+        redisUtil.insertKey(email,code);
 //        this.emails.put(email, code);
         try {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

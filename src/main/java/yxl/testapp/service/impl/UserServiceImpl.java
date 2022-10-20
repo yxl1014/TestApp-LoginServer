@@ -3,8 +3,6 @@ package yxl.testapp.service.impl;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import pto.TestProto;
@@ -84,7 +82,7 @@ public class UserServiceImpl implements UserService {
                         byte[] bytes = result.buildPartial().toByteArray();
                         return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
                     }
-                    redisUtil.insterKey(un, pwd);
+                    redisUtil.insertKey(un, pwd);
                 }
 
                 break;
@@ -110,7 +108,7 @@ public class UserServiceImpl implements UserService {
                         byte[] bytes = result.buildPartial().toByteArray();
                         return protocolUtil.encodeProtocol(bytes, bytes.length, TestProto.Types.S2C_LOGIN);
                     }
-                    redisUtil.insterKey(un, pwd);
+                    redisUtil.insertKey(un, pwd);
                 }
 
                 break;
